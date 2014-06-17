@@ -1,0 +1,21 @@
+{
+  "name": "hubot-lunch",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.coffee",
+  "author": "Chris Beer",
+  "license": "MIT",
+  "dependencies": {
+    "coffee-script": "~1.6",
+    "scraperjs": "^0.3.4"
+  },
+  "devDependencies": {
+    "chai": "^1.9.2",
+    "mocha": "*",
+    "sinon": "*",
+    "sinon-chai": "*"
+  },  
+  "scripts": {
+    "test": "mocha -R spec --compilers coffee:coffee-script test/lunch.coffee"
+  }
+}
