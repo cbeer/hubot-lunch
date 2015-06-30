@@ -10,18 +10,27 @@
 # Commands:
 #   lunch?
 
-scraper = require('scraperjs').StaticScraper
-
 module.exports = (robot) ->
-  robot.hear /lunch\?\b/i, (msg) ->
-    extract = ($) ->
+  robot.hear /lunch\?/i, (msg) ->
+    send_gsb_menu msg, 'http://legacy.cafebonappetit.com/api/2/menus?format=jsonp&cafe=269', (text)->
+      msg.send text
 
-      toText = () ->
-        $(this).text()
+send_gsb_menu = (msg, location, response_handler) ->
+  url = location
 
-      $('strong:contains("Lunch")').closest('tr').nextAll().find('.description strong').map(toText).get().join("; ")
+  msg.http(url).get() (error, response, body)->
+    return response_handler "Sorry, something went wrong" if error
+    try
+      json = JSON.parse(body)
+      items = json['items']
+      values = Object.keys(items).map (v)->
+        items[v]
+      specials = values.filter (v)->
+        v['special'] == 1
+      names = specials.map (v)->
+        v['label']
 
-    echo = (menu) ->
-      msg.send "GSB: " + menu
+      return response_handler("GSB: " +  names.join("; "))
 
-    scraper.create('http://legacy.cafebonappetit.com/print-menu/cafe/269/menu/80353/days/today/pgbrks/0/').scrape(extract, echo)
+    catch error
+      return response_handler "Sorry, something went wrong parsing JSON" + error

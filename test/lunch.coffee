@@ -14,4 +14,4 @@ describe 'hubot-lunch', ->
 
   describe 'lunch?', ->
     it 'registers a hear listener for "lunch?"', ->
-      expect(@robot.hear).to.have.been.calledWith(/lunch\?\b/i)
+      expect(@robot.hear).to.have.been.calledWith(/lunch\?/i)

@@ -6,8 +6,7 @@
   "author": "Chris Beer",
   "license": "MIT",
   "dependencies": {
-    "coffee-script": "~1.6",
-    "scraperjs": "^0.3.4"
+    "coffee-script": "~1.6"
   },
   "devDependencies": {
     "chai": "^1.9.2",
